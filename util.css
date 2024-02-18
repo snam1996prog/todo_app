@@ -1,0 +1,13 @@
+.none{
+    display: none;
+}
+
+.strthg{
+    text-decoration: line-through;
+    color: grey;
+}
+
+.bg_white{
+    background-color: white;
+    border: 1px solid white;
+}
