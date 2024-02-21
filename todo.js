@@ -4,9 +4,9 @@ const showData = () => {
   let i = 0;
   for (let main_d in local_data) {
     htmlContent += `<div class="itm" id="itm_${i}">
-    <button class="bg_white" id="task_${i}" onclick="done(this)"><img src="/Images/unckecked.png" class="uc" alt="img not avl"></button>
-    <p id="Task_p${i}" class="">${local_data[main_d]}</p>
-    <img src="/Images/close.png" class="close" alt="img not avl">
+    <button class="bg_white" id="task_${i}" onclick="done(this)"><img src="unckecked.png" class="uc" alt="img not avl"></button>
+    <p id="Task_p${i}">${local_data[main_d]}</p>
+    <button id="${i}" class="close-button" onclick="del(this)"><img src="close.png" class="close" alt="img not avl"></button>
     </div>`;
     i++;
   }
@@ -24,16 +24,27 @@ function done(button) {
   newElement.className = "itm";
   newElement.id = `itm_${j}`;
   if (button.nextElementSibling.classList.contains("strthg")) {
-    newElement.innerHTML = `<button class="bg_white strthg" id="task_${j}" onclick="done(this)"><img src="/Images/unckecked.png" class="uc" alt="img not avl"></button>
+    newElement.innerHTML = `<button class="bg_white strthg" id="task_${j}" onclick="done(this)"><img src="unckecked.png" class="uc" alt="img not avl"></button>
     <p id="Task_p${j}" class="">${local_data_2[str]}</p>
-    <img src="/Images/close.png" class="close" alt="img not avl">`;
+    <button id="${j}" onclick="del(this)"><img src="close.png" class="close" alt="img not avl"></button>`;
   } else {
-    newElement.innerHTML = `<button class="bg_white strthg" id="task_${j}" onclick="done(this)"><img src="/Images/checked.png" class="uc" alt="img not avl"></button>
+    newElement.innerHTML = `<button class="bg_white strthg" id="task_${j}" onclick="done(this)"><img src="checked.png" class="uc" alt="img not avl"></button>
     <p id="Task_p${j}" class="strthg">${local_data_2[str]}</p>
-    <img src="/Images/close.png" class="close" alt="img not avl">`;
+    <button id="${j}" onclick="del(this)"><img src="close.png" class="close" alt="img not avl"></button>`;
   }
 
   replacement.parentNode.replaceChild(newElement, replacement);
+}
+const del = (button)=>{
+  console.log(typeof(button.id));
+  let elems = JSON.parse(localStorage.getItem("task"));
+  console.log(elems);
+  let del_itm = elems.filter((elem, i)=>{
+    return i !== parseInt(button.id);
+  });
+  localStorage.setItem("task", JSON.stringify(del_itm));
+  console.log(del_itm);
+  showData()
 }
 document.getElementById("get").addEventListener("click", () => {
   console.log("Is it working?");
